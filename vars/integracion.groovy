@@ -42,9 +42,10 @@ def call(stageOptions){
         stage("gitCreateRelease"){    
             env.TAREA =  env.STAGE_NAME  
             echo "4.-Rama ${env.BRANCH_NAME}" 
+            echo 'stage gitCreateRelease'
 
-            if ((stageOptions.contains('gitCreateRelease') || (stageOptions =='')) && (buildEjecutado) && () )
-            echo 'stage gitCreateRelease' 
+            if ((stageOptions.contains('gitCreateRelease') || (stageOptions =='')) && (buildEjecutado) && (env.BRANCH_NAME.contains('develop')) )
+                echo 'creando gitCreateRelease' 
 
             
 
