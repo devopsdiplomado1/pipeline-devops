@@ -12,9 +12,12 @@ pipeline {
                 script {
                 //segun el valor del parametro se debe llamar a gradle o maven
                 env.TAREA = ''
-                echo "HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}" 
-                echo "PARAMETROS SELECCIONADOS: ${stage}"   
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"                             
+                echo "1.-HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}" 
+                echo "2.-PARAMETROS SELECCIONADOS: ${stage}"   
+                echo "3.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
+                echo "4.-Rama ${env.BRANCH_NAME}" 
+
+                                          
                 if (params.HERRAMIENTA == 'gradle'){
                     	//def ejecucion = load 'gradle.groovy'
 	                    //ejecucion.call()
