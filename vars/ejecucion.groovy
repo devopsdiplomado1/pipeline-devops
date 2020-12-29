@@ -18,7 +18,7 @@ pipeline {
                 echo "4.-Rama ${env.BRANCH_NAME}" 
 
                                           
-                if (params.HERRAMIENTA.contains('feature-')){
+                if (env.BRANCH_NAME.contains('feature-')){
                         echo "Entro a IC" 
                         IC.call(stage);
                 } else { 
