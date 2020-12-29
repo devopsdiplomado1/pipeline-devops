@@ -20,10 +20,10 @@ pipeline {
                                           
                 if (env.BRANCH_NAME.contains('feature-')){
                         echo "Entro a IC" 
-                        IC.call(stage);
+                        integracion.call(stage);
                 } else { 
                         echo "Entro a DC"
-                        DC.call();                 
+                        despliegue.call();                 
                 }
 
                 }
