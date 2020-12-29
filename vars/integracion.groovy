@@ -3,8 +3,8 @@ def call(stageOptions){
         def buildEjecutado = false;
 
         stage("compile"){   
-            env.TAREA =  env.STAGE_NAME 
-            buildEjecutado =true;
+            env.TAREA =  env.STAGE_NAME   
+            echo "XXXXXXXXX.-Rama ${env.BRANCH_NAME}"           
             echo 'stage compile'
             sh 'mvn clean compile -e'         
         }
@@ -16,7 +16,8 @@ def call(stageOptions){
         stage("jar"){   
             env.TAREA =  env.STAGE_NAME 
             echo 'stage jar'
-            sh 'mvn clean package -e'          
+            sh 'mvn clean package -e'
+            buildEjecutado =true;          
         }
 
         stage("sonar"){
@@ -37,7 +38,7 @@ def call(stageOptions){
             env.TAREA =  env.STAGE_NAME  
             echo 'stage nexusUpload' 
             if ((stageOptions.contains('Nexus') || (stageOptions =='')) && (buildEjecutado) )      
-                nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/libs/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '2.0.1']]]                     
+                nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '2.0.1']]]                     
         } 
         stage("gitCreateRelease"){    
             env.TAREA =  env.STAGE_NAME  
