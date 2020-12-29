@@ -18,11 +18,11 @@ pipeline {
                 echo "4.-Rama ${env.BRANCH_NAME}" 
 
                                           
-                if (env.BRANCH_NAME.contains('feature-')){
-                        echo "Entro a IC" 
+                if (env.BRANCH_NAME.contains('feature-') || (env.BRANCH_NAME.contains('develop') )) {
+                        echo "Entro a Integracion" 
                         integracion.call(stage);
-                } else { 
-                        echo "Entro a DC"
+                } else if (env.BRANCH_NAME.contains('release-')){ 
+                        echo "Entro a Despliegue"
                         despliegue.call();                 
                 }
 
