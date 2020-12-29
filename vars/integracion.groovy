@@ -1,9 +1,10 @@
 def call(stageOptions){
   
-        def ejecutarBuild = false;
+        def buildEjecutado = false;
+
         stage("compile"){   
             env.TAREA =  env.STAGE_NAME 
-            ejecutarBuild =true;
+            buildEjecutado =true;
             echo 'stage compile'
             sh 'mvn clean compile -e'         
         }
@@ -40,8 +41,12 @@ def call(stageOptions){
         } 
         stage("gitCreateRelease"){    
             env.TAREA =  env.STAGE_NAME  
-            echo 'stage gitCreateRelease' 
             echo "4.-Rama ${env.BRANCH_NAME}" 
+
+            if ((stageOptions.contains('gitCreateRelease') || (stageOptions =='')) && (buildEjecutado) && () )
+            echo 'stage gitCreateRelease' 
+
+            
 
         }
 
