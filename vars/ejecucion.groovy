@@ -18,14 +18,12 @@ pipeline {
                 echo "4.-Rama ${env.BRANCH_NAME}" 
 
                                           
-                if (params.HERRAMIENTA == 'gradle'){
-                    	//def ejecucion = load 'gradle.groovy'
-	                    //ejecucion.call()
-                        gradle.call(stage);
-                } else {
-                    	//def ejecucion = load 'maven.groovy'
-	                    //ejecucion.call()   
-                        maven.call();                 
+                if (params.HERRAMIENTA.contains('feature-')){
+                        echo "Entro a IC" 
+                        IC.call(stage);
+                } else { 
+                        echo "Entro a DC"
+                        DC.call();                 
                 }
 
                 }
