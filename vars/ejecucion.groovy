@@ -6,7 +6,7 @@ def isDespliegue() {
     return ("${env.BRANCH_NAME}" =~ /(release)/)
 }
 def getNombreProyecto(){
-    return env.GIT_URL.replaceAll('https://github.com/devopsdiplomado1', '').replaceAll('.git', '');
+    return env.GIT_URL.replaceAll('https://github.com/devopsdiplomado1/', '').replaceAll('.git', '');
 }    
 
 
@@ -37,11 +37,12 @@ pipeline {
                 echo "C.-Rama ${env.BRANCH_NAME}" 
                 echo "D.-Nombre del projecto ${getNombreProyecto()}" 
 
-                /*if () {
-                currentBuild.result = 'FAILURE'
-                echo "No se puede ejecutar este pipeline, ya que no ingreso parametros conocidos"
+                if (getNombreProyecto().startsWith("ms-")) {
+                    currentBuild.result = 'FAILURE'
+                    echo "No se puede ejecutar este pipeline, ya que el proyecto no es de microservicios!!"
+                    error ('No se puede ejecutar este pipeline, ya que el proyecto no es de microservicios') 
                 } 
-                */  
+                  
 /*
                 switch(env.BRANCH_NAME){
                     case 'feature*':
