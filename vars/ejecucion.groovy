@@ -37,34 +37,11 @@ pipeline {
                 echo "C.-Rama ${env.BRANCH_NAME}" 
                 echo "D.-Nombre del projecto ${getNombreProyecto()}" 
 
-                if (getNombreProyecto().startsWith("ms-")) {
+                if (!getNombreProyecto().startsWith("ms-")) {
                     currentBuild.result = 'FAILURE'
-                    echo "No se puede ejecutar este pipeline, ya que el proyecto no es de microservicios!!"
                     error ('No se puede ejecutar este pipeline, ya que el proyecto no es de microservicios') 
                 } 
-                  
-/*
-                switch(env.BRANCH_NAME){
-                    case 'feature*':
-                        echo "Entro a Integracion" 
-                        integracion.call(stage)
-                        break                    
-                    case 'develop':    
-                        echo "Entro a Integracion" 
-                        integracion.call(stage)
-                        break
-                    case 'release-*':
-                        echo "Entro a Despliegue"
-                        despliegue.call()
-                        break
-                    case 'main':
-                    case 'master':
-                        error ('Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline')    
-
-                }   
-
-
-*/
+                
 
                 if (isIntegracion()) {
                         echo "Entro a Integracion" 
@@ -73,7 +50,7 @@ pipeline {
                         echo "Entro a Despliegue"
                         despliegue.call();                 
                 }  else {
-                    echo " La rama <${env.GIT_BRANCH}> no puede ejecutarse con este pipeline" 
+                        error ('Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline')
                 }
 
                 }
