@@ -2,12 +2,23 @@ def isIntegracion() {
     return ("${env.BRANCH_NAME}" =~ /(feature|develop)/)
 }
 
+def isDespliegue() {
+    return ("${env.BRANCH_NAME}" =~ /(release)/)
+}
 
 def call(){
 pipeline {
     agent any
     parameters { 
         string(name: 'stage' , defaultValue: '', description: '')
+    }
+
+    stages {
+        stage("Env Variables") {
+            steps {
+                sh "printenv"
+            }
+        }
     }
     
     stages {
@@ -44,24 +55,14 @@ pipeline {
                         error ('Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline')    
 
                 }   
-                if (env.BRANCH_NAME.contains('feature-') || (env.BRANCH_NAME.contains('develop') )) {
-                        echo "Entro a Integracion" 
-                        integracion.call(stage);
-                } else if (env.BRANCH_NAME.contains('release-')){ 
-                        echo "Entro a Despliegue"
-                        despliegue.call();                 
-                }  else {
-                    echo " La rama <${env.GIT_BRANCH}> no puede ejecutarse con este pipeline" 
-                }
 
-                }
 
 */
 
                 if (isIntegracion()) {
                         echo "Entro a Integracion" 
                         integracion.call(stage);
-                } else if (env.BRANCH_NAME.contains('release-')){ 
+                } else if (def isDespliegue()){ 
                         echo "Entro a Despliegue"
                         despliegue.call();                 
                 }  else {
