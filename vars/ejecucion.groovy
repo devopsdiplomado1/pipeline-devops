@@ -13,15 +13,14 @@ pipeline {
         string(name: 'stage' , defaultValue: '', description: '')
     }
 
+
     stages {
         stage("Env Variables") {
             steps {
                 sh "printenv"
             }
         }
-    }
-    
-    stages {
+
         stage('Pipeline') {
             steps {
                 script {
