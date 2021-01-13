@@ -10,10 +10,8 @@ def getNombreProyecto(){
 } 
 
 def isProyectoMavenOK(){
-         return (((fileExists('mvnwqq')  &&  fileExists('mvnw.cmdqq')));
-
+         return ( (fileExists('mvnwqq')  &&  fileExists('mvnw.cmdqq')) );
 }
-
 
 def call(){
 pipeline {
