@@ -23,20 +23,20 @@ def call(stageOptions){
                 env.TAREA =  env.STAGE_NAME 
                 buildEjecutado =false;
                 if (stageOptions.contains('Compile Code') || (stageOptions ==''))  { 
-                    sh 'mvn clean compile -e'                    
+                    sh './mvnw clean compile -e'                    
                 }
         }
 
         stage('unitTest') {     
                 env.TAREA =  env.STAGE_NAME  
                 if ((stageOptions.contains('Test') || (stageOptions =='')) ) {      
-                    sh 'mvn clean test -e'
+                    sh './mvnw clean test -e'
                 } 
         }
         stage('jar') {        
                 env.TAREA =  env.STAGE_NAME 
                 if ((stageOptions.contains('Test') || (stageOptions ==''))) {      
-                    sh 'mvn clean package -e' 
+                    sh './mvnw clean package -e' 
                     buildEjecutado =true;
                 }
         }
