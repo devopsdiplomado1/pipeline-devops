@@ -20,10 +20,11 @@ pipeline {
                 echo "2.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
                 echo "3.-Rama ${env.BRANCH_NAME}" 
 
-                if () {
+                /*if () {
                 currentBuild.result = 'FAILURE'
                 echo "No se puede ejecutar este pipeline, ya que no ingreso parametros conocidos"
-            }   
+                } 
+                */  
 /*
                 switch(env.BRANCH_NAME){
                     case 'feature*':
