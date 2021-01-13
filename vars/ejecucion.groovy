@@ -18,11 +18,11 @@ pipeline {
                 swith(env.BRANCH_NAME){
                     case "feature-*":
                     case "develop":    
-                        echo "Entro a Integracion" 
+                        echo "Entro a Integracion"; 
                         integracion.call(stage);
                         break
                     case "release-*":
-                        echo "Entro a Despliegue"
+                        echo "Entro a Despliegue";
                         despliegue.call();  
                         break
                     case "main":
