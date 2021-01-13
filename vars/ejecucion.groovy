@@ -16,7 +16,7 @@ pipeline {
                 echo "3.-Rama ${env.BRANCH_NAME}" 
 
                 switch(env.BRANCH_NAME){
-                    case 'feature-*':
+                    case 'feature*':
                         echo "Entro a Integracion" 
                         integracion.call(stage)
                         break                    
