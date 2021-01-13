@@ -15,7 +15,23 @@ pipeline {
                 echo "2.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
                 echo "3.-Rama ${env.BRANCH_NAME}" 
 
-                                          
+                swith(env.BRANCH_NAME){
+                    case 'feature-*':
+                    case 'develop':    
+                        echo "Entro a Integracion" 
+                        integracion.call(stage);
+                        break
+                    case 'release-*':
+                        echo "Entro a Despliegue"
+                        despliegue.call();  
+                        break
+                    case 'main':
+                    case 'master':
+                        error ('Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline')    
+
+                }   
+
+/*
                 if (env.BRANCH_NAME.contains('feature-') || (env.BRANCH_NAME.contains('develop') )) {
                         echo "Entro a Integracion" 
                         integracion.call(stage);
@@ -25,7 +41,7 @@ pipeline {
                 }  else {
                     echo " La rama <${env.GIT_BRANCH}> no se proceso" 
                 }
-
+*/
                 }
             }
         }
