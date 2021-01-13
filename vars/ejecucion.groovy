@@ -6,7 +6,7 @@ def isDespliegue() {
     return ("${env.BRANCH_NAME}" =~ /(release)/)
 }
 def getNombreProyecto(){
-    return build.environment.get("GIT_URL").replaceAll('https://github.com/', '').replaceAll('.git', '');
+    return env.GIT_URL.replaceAll('https://github.com/', '').replaceAll('.git', '');
 }    
 
 
