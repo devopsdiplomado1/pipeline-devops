@@ -17,11 +17,13 @@ pipeline {
 
 
     stages {
+        /*
         stage("Env Variables") {
             steps {
                 sh "printenv"
             }
         }
+        */
 
         stage('Pipeline') {
             steps {
@@ -31,7 +33,7 @@ pipeline {
                 echo "1.-Parametros seleccionados: ${stage}"   
                 echo "2.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
                 echo "3.-Rama ${env.BRANCH_NAME}" 
-                echo "4.-Nombre projecto ${projectName}" 
+                echo "4.-Nombre del projecto ${projectName}" 
 
                 /*if () {
                 currentBuild.result = 'FAILURE'
