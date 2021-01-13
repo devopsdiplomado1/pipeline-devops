@@ -54,10 +54,11 @@ def call(stageOptions){
 
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
-                if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) )
+                if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) ) {
                     echo "Aplicando Sonar al proeycto:${getNombreProyecto()}-${env.BRANCH_NAME}-${env.BUILD_ID}"
                     //sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ms-iclab-feature-estadomundial-10 -Dsonar.java.binaries=build" 
                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${getNombreProyecto()}-${env.BRANCH_NAME}-${env.BUILD_ID} -Dsonar.java.binaries=build"   
+                   }    
             }  
         }         
 
