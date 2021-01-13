@@ -22,6 +22,8 @@ pipeline {
                 } else if (env.BRANCH_NAME.contains('release-')){ 
                         echo "Entro a Despliegue"
                         despliegue.call();                 
+                }  else {
+                    echo " La rama <${env.GIT_BRANCH}> no se proceso" 
                 }
 
                 }
@@ -32,13 +34,12 @@ pipeline {
     post {
         success{
             //: [Nombre Alumno][Nombre Job][buildTool] Ejecución exitosa
-            slackSend color: 'good', message: "[Rodrigo Zuniga][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecucion exitosa"           
+            slackSend color: 'good', message: "[Grupo 1][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecucion exitosa"           
         }
 
         failure{
             //[Nombre Alumno][Nombre Job][buildTool] Ejecución fallida en stage [Stage]
-            //la variable env.TAREA esta definida en los groovy
-            slackSend color: 'danger', message: "[Rodrigo Zuniga][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecución fallida en stage [${env.TAREA}]"                   
+            slackSend color: 'danger', message: "[Grupo 1][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecución fallida en stage [${env.TAREA}]"                   
         }
     }
 
