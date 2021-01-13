@@ -55,10 +55,9 @@ def call(stageOptions){
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) )
-                    //sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar' 
-                    //{nombreRepo}-{rama}-{numeroEjecucion}
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ms-iclab-feature-estadomundial-10 -Dsonar.java.binaries=build" 
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${nombreRepo}-${rama}-${numeroEjecucion} -Dsonar.java.binaries=build"   
+                    echo "Aplicando Sonar al proeycto:${getNombreProyecto()}-${env.BRANCH_NAME}-${env.BUILD_ID}"
+                    //sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ms-iclab-feature-estadomundial-10 -Dsonar.java.binaries=build" 
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${getNombreProyecto()}-${env.BRANCH_NAME}-${env.BUILD_ID} -Dsonar.java.binaries=build"   
             }  
         }         
 
@@ -74,8 +73,7 @@ def call(stageOptions){
             env.TAREA =  env.STAGE_NAME 
             echo "STAGE ${env.STAGE_NAME}"
             echo "entro a gitCreateRelease" 
-            //Este stage sólo debe estar disponible para la rama develop. 
-        
+            //Este stage sólo debe estar disponible para la rama develop.         
         }                    
 
 }
