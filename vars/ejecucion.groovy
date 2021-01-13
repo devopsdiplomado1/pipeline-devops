@@ -47,11 +47,11 @@ pipeline {
 
                 if (isIntegracion()) {
                         echo "Entro a Integracion" 
-                        integracion.call(stage);
+                        integracion.call(stage, getNombreProyecto());
                 } else if (isDespliegue()){ 
                         echo "Entro a Despliegue"
                         //Validar formato de nombre de rama release según patrón, release-v{major}-{minor}-{patch}
-                        despliegue.call();                 
+                        despliegue.call(stage, getNombreProyecto());                 
                 }  else {
                         error ('Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline')
                 }

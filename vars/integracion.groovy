@@ -1,4 +1,4 @@
-def call(stageOptions){
+def call(stageOptions, nameProject){
    def buildEjecutado = false;
   
          stage("Validar"){
@@ -55,9 +55,10 @@ def call(stageOptions){
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) ) {
-                    echo "Aplicando Sonar al proeycto:${getNombreProyecto()}-${env.BRANCH_NAME}-${env.BUILD_ID}"
+                    projectKey = "${nameProject}-${env.BRANCH_NAME}-${env.BUILD_ID}"
+                    echo "Aplicando Sonar al proyecto:${projectKey}"
                     //sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ms-iclab-feature-estadomundial-10 -Dsonar.java.binaries=build" 
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${getNombreProyecto()}-${env.BRANCH_NAME}-${env.BUILD_ID} -Dsonar.java.binaries=build"   
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${projectKey} -Dsonar.java.binaries=build"   
                    }    
             }  
         }         
