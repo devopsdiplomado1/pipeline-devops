@@ -16,20 +16,20 @@ pipeline {
                 echo "3.-Rama ${env.BRANCH_NAME}" 
 
                 switch(env.BRANCH_NAME){
-                    case "feature-*":
+                    case 'feature-*':
                         echo "Entro a Integracion" 
                         integracion.call(stage)
                         break                    
-                    case "develop":    
+                    case 'develop':    
                         echo "Entro a Integracion" 
                         integracion.call(stage)
                         break
-                    case "release-*":
+                    case 'release-*':
                         echo "Entro a Despliegue"
                         despliegue.call()
                         break
-                    case "main":
-                    case "master":
+                    case 'main':
+                    case 'master':
                         error ('Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline')    
 
                 }   
