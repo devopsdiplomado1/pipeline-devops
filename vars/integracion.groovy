@@ -1,3 +1,12 @@
+def crearRamaGit(String origin, String newRranch){
+    sh '''
+        git fetch -p
+        git checkout '''+origin+'''; git pull
+        git checkout -b '''+newRranch+'''
+        git push origin '''+newRranch+'''
+    '''
+}
+
 def call(stageOptions, nameProject){
    def buildEjecutado = false;
   
@@ -72,10 +81,14 @@ def call(stageOptions, nameProject){
 
         stage('gitCreateRelease') {  
             //rodrigo
-            env.TAREA =  env.STAGE_NAME 
-            echo "STAGE ${env.STAGE_NAME}"
-            echo "entro a gitCreateRelease" 
-            //Este stage sólo debe estar disponible para la rama develop.         
+            if ("${env.BRANCH_NAME}" =~ /(develop)/) {
+                env.TAREA =  env.STAGE_NAME 
+                echo "STAGE ${env.STAGE_NAME}"
+                echo "entro a gitCreateRelease" 
+                crearRamaGit("${env.BRANCH_NAME}", "release-ejemplo");
+                //Este stage sólo debe estar disponible para la rama develop.  
+                //Si IC de develop OK = ejecución de pipeline CD para rama Release creada  
+            }         
         }                    
 
 }
