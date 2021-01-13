@@ -39,7 +39,7 @@ pipeline {
                     error ('No se puede ejecutar este pipeline, ya que el proyecto no es de microservicios') 
                 } 
 
-                 if (isProyectoMavenOK()) {
+                 if (!isProyectoMavenOK()) {
                     currentBuild.result = 'FAILURE'
                     error ('No se puede ejecutar este pipeline, ya que el proyecto no tiene los archivos de compileación de maven') 
                 }                
