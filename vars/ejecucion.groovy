@@ -5,7 +5,9 @@ def isIntegracion() {
 def isDespliegue() {
     return ("${env.BRANCH_NAME}" =~ /(release)/)
 }
-def projectName = build.environment.get("GIT_URL").replaceAll('https://github.com/', '').replaceAll('.git', '')
+def getNombreProyecto(){
+    return build.environment.get("GIT_URL").replaceAll('https://github.com/', '').replaceAll('.git', '');
+}    
 
 
 def call(){
@@ -30,10 +32,10 @@ pipeline {
                 script {
 
                 env.TAREA = ''
-                echo "1.-Parametros seleccionados: ${stage}"   
-                echo "2.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
-                echo "3.-Rama ${env.BRANCH_NAME}" 
-                echo "4.-Nombre del projecto ${projectName}" 
+                echo "A.-Parametros seleccionados: ${stage}"   
+                echo "B.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
+                echo "C.-Rama ${env.BRANCH_NAME}" 
+                echo "D.-Nombre del projecto ${getNombreProyecto()}" 
 
                 /*if () {
                 currentBuild.result = 'FAILURE'
