@@ -22,19 +22,22 @@ def call(stageOptions){
         stage('Compile') {
                 env.TAREA =  env.STAGE_NAME 
                 buildEjecutado =false;
+                echo "STAGE ${env.STAGE_NAME}"
                 if (stageOptions.contains('Compile Code') || (stageOptions ==''))  { 
                     sh 'mvn clean compile -e'                    
                 }
         }
 
         stage('unitTest') {     
-                env.TAREA =  env.STAGE_NAME  
+                env.TAREA =  env.STAGE_NAME 
+                echo "STAGE ${env.STAGE_NAME}" 
                 if ((stageOptions.contains('Test') || (stageOptions =='')) ) {      
                     sh 'mvn clean test -e'
                 } 
         }
         stage('jar') {        
                 env.TAREA =  env.STAGE_NAME 
+                echo "STAGE ${env.STAGE_NAME}"
                 if ((stageOptions.contains('Test') || (stageOptions ==''))) {      
                     sh 'mvn clean package -e' 
                     buildEjecutado =true;
@@ -42,6 +45,7 @@ def call(stageOptions){
         }
         stage('sonar') {
             env.TAREA =  env.STAGE_NAME 
+            echo "STAGE ${env.STAGE_NAME}"
             if (!buildEjecutado) {
                 currentBuild.result = 'FAILURE'
                 echo "No se puede ejecutar Sonar sin haber ejecutado un Build"
@@ -58,13 +62,15 @@ def call(stageOptions){
         }         
 
         stage('nexusUpload') {  
-            env.TAREA =  env.STAGE_NAME   
+            env.TAREA =  env.STAGE_NAME 
+            echo "STAGE ${env.STAGE_NAME}"  
             if ((stageOptions.contains('Nexus') || (stageOptions =='')) && (buildEjecutado) )          
                 nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '2.0.1']]]                     
         }  
 
         stage('gitCreateRelease') {  
             env.TAREA =  env.STAGE_NAME 
+            echo "STAGE ${env.STAGE_NAME}"
             echo "entro a gitCreateRelease" 
             //Este stage sólo debe estar disponible para la rama develop. 
         
