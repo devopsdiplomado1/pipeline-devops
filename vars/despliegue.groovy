@@ -1,7 +1,8 @@
-def call(stageOptions){
+    def call(stageOptions){
   
         def ejecutarBuild = false;
-        stage("gitDiff"){    
+        stage("gitDiff"){   
+            //Andres 
             env.TAREA =  env.STAGE_NAME  
             echo 'stage gitDiff' 
 
@@ -26,17 +27,20 @@ def call(stageOptions){
                 sh 'curl -X GET "http://localhost:8081/rest/mscovid/test?msg=testing"'
         }  
 
-         stage("gitMergeMaster"){    
+         stage("gitMergeMaster"){   
+             //cesar 
             env.TAREA =  env.STAGE_NAME  
             echo 'stage gitMergeMaster' 
 
         } 
-        stage("gitMergeDevelop"){    
+        stage("gitMergeDevelop"){  
+             //cesar  
             env.TAREA =  env.STAGE_NAME   
             echo 'stage gitMergeDevelop'
 
         } 
         stage("gitTagMaster"){    
+             //Joram
             env.TAREA =  env.STAGE_NAME 
             echo 'stage gitTagMaster'  
 

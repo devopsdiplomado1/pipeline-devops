@@ -10,7 +10,7 @@ def getNombreProyecto(){
 } 
 
 def isProyectoMavenOK(){
-         return ( (fileExists('mvnwqq')  &&  fileExists('mvnw.cmdqq')) );
+         return ( (fileExists('mvnw')  &&  fileExists('mvnw.cmd')) );
 }
 
 def call(){
@@ -32,7 +32,7 @@ pipeline {
                 echo "B.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
                 echo "C.-Rama ${env.BRANCH_NAME}" 
                 echo "D.-Nombre del projecto ${getNombreProyecto()}" 
-                echo "D.-Nombre del projecto ${isProyectoMavenOK()}" 
+                echo "E.-Nombre del projecto ${isProyectoMavenOK()}" 
 
                 if (!getNombreProyecto().startsWith("ms-")) {
                     currentBuild.result = 'FAILURE'
@@ -41,7 +41,7 @@ pipeline {
 
                  if (!isProyectoMavenOK()) {
                     currentBuild.result = 'FAILURE'
-                    error ('No se puede ejecutar este pipeline, ya que el proyecto no tiene los archivos de compileación de maven') 
+                    error ('No se puede ejecutar este pipeline, ya que el proyecto no tiene los archivos de compilación de maven') 
                 }                
                 
 
@@ -63,6 +63,7 @@ pipeline {
     }
 
     post {
+        //Tamara
         success{
             //: [Nombre Alumno][Nombre Job][buildTool] Ejecución exitosa
             slackSend color: 'good', message: "[Grupo 1][${env.JOB_NAME}]Ejecucion exitosa"           
