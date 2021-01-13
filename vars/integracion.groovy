@@ -14,7 +14,7 @@ def call(stageOptions){
                echo "Ok, se continua con los stage, ya que ingreso parametros conocidos"
             } else {
                 currentBuild.result = 'FAILURE'
-                echo "No se puede ejecutar este pipeline, ya que no ingreso parametros conocidos"
+                error ('No se puede ejecutar este pipeline, ya que no ingreso parametros conocidos')
             }   
 
        }
