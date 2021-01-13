@@ -15,7 +15,7 @@ pipeline {
                 echo "2.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
                 echo "3.-Rama ${env.BRANCH_NAME}" 
 
-                swith(env.BRANCH_NAME){
+                switch(env.BRANCH_NAME){
                     case "feature-*":
                         echo "Entro a Integracion" 
                         integracion.call(stage)
