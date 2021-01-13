@@ -7,7 +7,14 @@ def isDespliegue() {
 }
 def getNombreProyecto(){
     return env.GIT_URL.replaceAll('https://github.com/devopsdiplomado1/', '').replaceAll('.git', '');
-}    
+} 
+
+def isProyectoMavenOK(){
+        if ((fileExists('mvnwqq')  &&  fileExists('mvnw.cmdqq'))
+         return true;
+        else 
+         return false; 
+}
 
 
 def call(){
@@ -25,7 +32,7 @@ pipeline {
                 script {
 
                 env.TAREA = ''
-                echo "A.-Parametros seleccionados: ${stage}"   
+                echo "A.-Stages seleccionados: ${stage}"   
                 echo "B.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
                 echo "C.-Rama ${env.BRANCH_NAME}" 
                 echo "D.-Nombre del projecto ${getNombreProyecto()}" 
@@ -34,6 +41,11 @@ pipeline {
                     currentBuild.result = 'FAILURE'
                     error ('No se puede ejecutar este pipeline, ya que el proyecto no es de microservicios') 
                 } 
+
+                 if (isProyectoMavenOK()) {
+                    currentBuild.result = 'FAILURE'
+                    error ('No se puede ejecutar este pipeline, ya que el proyecto no tiene los archivos de compileación de maven') 
+                }                
                 
 
                 if (isIntegracion()) {
