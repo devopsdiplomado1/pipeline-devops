@@ -62,7 +62,7 @@ pipeline {
                 if (isIntegracion()) {
                         echo "Entro a Integracion" 
                         integracion.call(stage);
-                } else if (def isDespliegue()){ 
+                } else if (isDespliegue()){ 
                         echo "Entro a Despliegue"
                         despliegue.call();                 
                 }  else {
