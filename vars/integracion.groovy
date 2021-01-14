@@ -26,7 +26,8 @@ def chequearSiExisteRama(String rama){
     echo gettags.text.readLines()
          .collect { it.split()[1].replaceAll('refs/heads/', '')  }
          .unique()
-         .findAll { it.startsWith('<some more pattern>') }
+         .findAll { it.startsWith('release-v1-0-0') }
+         echo "xxxx"
 
 	return existe
 
