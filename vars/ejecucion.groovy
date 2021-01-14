@@ -3,7 +3,7 @@ def isIntegracion() {
 }
 
 def isDespliegue() {
-    return ("${env.BRANCH_NAME}" =~ /(release)/)
+    return ("${env.BRANCH_NAME}" =~ /(release*)/)
 }
 def getNombreProyecto(){
     return env.GIT_URL.replaceAll('https://github.com/devopsdiplomado1/', '').replaceAll('.git', '');
@@ -54,7 +54,7 @@ pipeline {
                         //tamara - cesar 
                         despliegue.call(stage, getNombreProyecto());                 
                 }  else {
-                        error ('Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline')
+                        error ("Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline")
                 }
 
                 }
