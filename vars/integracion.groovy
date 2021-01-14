@@ -31,7 +31,7 @@ def chequearSiExisteRama(String rama){
     def existe = false
     if ("${listarRamas()}  =~ /(${rama})/)")
         existe = true
-    /*
+    /* este comando nos daba error de permisos
     try {
         def output = sh (script: "git ls-remote --heads ${rama}", returnStdout: true)
         if (output?.trim()) {
@@ -133,10 +133,21 @@ def call(stageOptions, nameProject){
                 echo "entro a gitCreateRelease" 
 
                 if (chequearSiExisteRama("${nameRelease}")) {
+                    echo "Se borra rama <${nameRelease}>"
                     borrarRama("${nameRelease}")
-                    crearRamaGit("${env.GIT_BRANCH}", "${projectRelease}");
+                    echo "Se crea rama <${nameRelease}>"
+                    crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
+                    if (chequearSiExisteRama("${nameRelease}"))
+                          echo "Rama <${nameRelease}> creada correctamente"
+                    else      
+                        echo "Rama <${nameRelease}> no se creo"
                 } else {
-                    crearRamaGit("${env.GIT_BRANCH}", "${projectRelease}");
+                    echo "Se crea rama <${nameRelease}>"
+                    crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
+                    if (chequearSiExisteRama("${nameRelease}"))
+                          echo "Rama <${nameRelease}> creada correctamente"
+                    else      
+                        echo "Rama <${nameRelease}> no se creo"
                 }
                 
                 //Este stage sólo debe estar disponible para la rama develop.  
