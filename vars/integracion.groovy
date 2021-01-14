@@ -8,8 +8,8 @@ def crearRamaGit(String origin, String newRranch){
 }
 
 def borrarRama(String rama){
+    sh "git fetch -p"
     sh "git branch -d  ${rama}"
-    sh "git branch -D  ${rama}"
     sh "git push origin --delete ${rama}"
 }
 
@@ -141,15 +141,19 @@ def call(stageOptions, nameProject){
                     crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
                     if (chequearSiExisteRama("${nameRelease}"))
                           echo "Rama <${nameRelease}> creada correctamente"
-                    else      
-                        echo "Rama <${nameRelease}> no se creo"
+                    else {    
+                        currentBuild.result = 'FAILURE'
+                        error ('Rama <${nameRelease}> no se creo')
+                    }
                 } else {
                     echo "Se crea rama <${nameRelease}>"
                     crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
                     if (chequearSiExisteRama("${nameRelease}"))
                           echo "Rama <${nameRelease}> creada correctamente"
-                    else      
-                        echo "Rama <${nameRelease}> no se creo"
+                    else  {    
+                        currentBuild.result = 'FAILURE'
+                        error ('Rama <${nameRelease}> no se creo')
+                    }
                 }
                 
                 //Este stage sólo debe estar disponible para la rama develop.  
