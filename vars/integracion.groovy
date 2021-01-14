@@ -11,8 +11,25 @@ def borrarRama(String rama){
   sh "git push origin --delete ${rama}"
 }
 
+def listarRamas(){
+
+    def getBranches = ("git ls-remote https://github.com/devopsdiplomado1/ms-iclab.git").execute()
+
+    def branchNameList = getBranches.text.readLines().collect {
+     it.split()[1]
+    }
+    def releaseBranchList = branchNameList.findAll { it =~ /refs\/heads\/release*/ }
+
+    def humanReadableReleaseBranchList = releaseBranchList.collect {
+    it.replaceAll('refs/heads/', '')
+    }
+
+    return humanReadableReleaseBranchList
+}
+
 def chequearSiExisteRama(String rama){
     def existe = false;
+    echo "${listarRamas()}"
     /*
     try {
         def output = sh (script: "git ls-remote --heads ${rama}", returnStdout: true)
@@ -23,17 +40,14 @@ def chequearSiExisteRama(String rama){
         existe = false;
 
     }*/
-    echo gettags.text.readLines()
-         .collect { it.split()[1].replaceAll('refs/heads/', '')  }
-         .unique()
-         .findAll { it.startsWith('release-v1-0-0') }
-         echo "xxxx"
 
 	return existe
 
 }
 
-def gettags = ("git ls-remote -t -h https://github.com/devopsdiplomado1/ms-iclab.git release*").execute()
+
+
+
 
 
 
