@@ -8,9 +8,17 @@ def crearRamaGit(String origin, String newRranch){
 }
 
 def borrarRama(String rama){
-    sh "git fetch -p"
-    sh "git branch -d  ${rama}"
-    sh "git push origin --delete ${rama}"
+    
+    try {
+        sh "git fetch -p"
+        sh "git branch -d  ${rama}"
+    } catch (Exception a){ }   
+
+    try {
+        sh "git push origin --d}elete ${rama}"
+        sh "git fetch -p"
+    } catch (Exception a){ }      
+    
 }
 
 def listarRamas(){
