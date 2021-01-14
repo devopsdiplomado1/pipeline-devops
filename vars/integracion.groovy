@@ -14,7 +14,7 @@ def borrarRama(String rama){
 def chequearSiExisteRama(String rama){
     def existe = false;
     try {
-        def output = sh (script: "git ls-remote --heads ${rama}", returnStdout: true)
+        def output = sh (script: "git ls-remote --heads ${rama}", returnStdout: false)
         if (output?.trim()) {
 		    existe = true;
 	    } 
