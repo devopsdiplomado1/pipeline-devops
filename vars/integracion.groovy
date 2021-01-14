@@ -23,13 +23,14 @@ def listarRamas(){
     def humanReadableReleaseBranchList = releaseBranchList.collect {
     it.replaceAll('refs/heads/', '')
     }
-
+    echo "${humanReadableReleaseBranchList}"
     return humanReadableReleaseBranchList
 }
 
 def chequearSiExisteRama(String rama){
-    def existe = false;
-    echo "${listarRamas()}"
+    def existe = false
+    if ("${listarRamas()}  =~ /(${rama})/)"
+        existe = true
     /*
     try {
         def output = sh (script: "git ls-remote --heads ${rama}", returnStdout: true)
