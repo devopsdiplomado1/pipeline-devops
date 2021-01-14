@@ -151,9 +151,9 @@ def call(stageOptions, nameProject){
                     echo "Se crea rama <${nameRelease}>"
                     crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
                     if (chequearSiExisteRama("${nameRelease}")) {
-                          echo "Rama <${nameRelease}> creada correctamente"
-                          echo "Ahora se llama a despliegue continuo..."
-                          despliegue.call(stageOptions, nameProject);
+                        echo "Rama <${nameRelease}> creada correctamente"
+                        echo "Ahora se llama a despliegue continuo..."
+                        despliegue.call(stageOptions, nameProject);
                     } else {    
                         currentBuild.result = 'FAILURE'
                         error ('Rama <${nameRelease}> no se creo')
@@ -162,9 +162,9 @@ def call(stageOptions, nameProject){
                     echo "Se crea rama <${nameRelease}>"
                     crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
                     if (chequearSiExisteRama("${nameRelease}")) {
-                          echo "Rama <${nameRelease}> creada correctamente"
-                          echo "Ahora se llama a despliegue continuo..."
-                          despliegue.call(stageOptions, nameProject);
+                        echo "Rama <${nameRelease}> creada correctamente"
+                        echo "Ahora se llama a despliegue continuo..."
+                        despliegue.call(stageOptions, nameProject);
                     } else  {    
                         currentBuild.result = 'FAILURE'
                         error ('Rama <${nameRelease}> no se creo')
