@@ -32,7 +32,7 @@ pipeline {
                 echo "B.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
                 echo "C.-Rama ${env.BRANCH_NAME}" 
                 echo "D.-Nombre del projecto ${getNombreProyecto()}" 
-                echo "E.-Nombre del projecto ${isProyectoMavenOK()}" 
+                echo "E.-Estan los archivos maven? ${isProyectoMavenOK()}" 
 
                 if (!getNombreProyecto().startsWith("ms-")) {
                     currentBuild.result = 'FAILURE'
