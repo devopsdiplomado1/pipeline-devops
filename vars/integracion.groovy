@@ -13,18 +13,28 @@ def borrarRama(String rama){
 
 def chequearSiExisteRama(String rama){
     def existe = false;
+    /*
     try {
-        def output = sh (script: "git ls-remote --heads ${rama}", returnStdout: false)
+        def output = sh (script: "git ls-remote --heads ${rama}", returnStdout: true)
         if (output?.trim()) {
 		    existe = true;
 	    } 
     } catch (Exception a){
         existe = false;
 
-    }
+    }*/
+    echo gettags.text.readLines()
+         .collect { it.split()[1].replaceAll('refs/heads/', '')  }
+         .unique()
+         .findAll { it.startsWith('<some more pattern>') }
+
 	return existe
 
 }
+
+def gettags = ("git ls-remote -t -h https://github.com/devopsdiplomado1/ms-iclab.git release*").execute()
+
+
 
 def call(stageOptions, nameProject){
    def buildEjecutado = false;
