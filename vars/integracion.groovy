@@ -29,7 +29,7 @@ def listarRamas(){
 
 def chequearSiExisteRama(String rama){
     def existe = false
-    if ("${listarRamas()}  =~ /(${rama})/)"
+    if ("${listarRamas()}  =~ /(${rama})/)")
         existe = true
     /*
     try {
