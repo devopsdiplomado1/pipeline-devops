@@ -29,7 +29,7 @@ def listarRamas(){
 
 def chequearSiExisteRama(String rama){
     def existe = false
-    if ("${listarRamas()}  =~ /(${rama})/)")
+    if ("${listarRamas()}".contains("${rama}"))
         existe = true
     /* este comando nos daba error de permisos
     try {
