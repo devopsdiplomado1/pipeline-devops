@@ -81,28 +81,19 @@ def call(stageOptions, nameProject){
                 if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
                     echo "Se borra rama <${nameRelease}>"
                     gitUtils.borrarRama("${nameRelease}")
-                    echo "Se crea rama <${nameRelease}>"
-                    gitUtils.crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
-                    if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
-                        echo "Rama <${nameRelease}> creada correctamente"
-                        echo "Ahora se llama a despliegue continuo..."
-                        despliegue.call(stageOptions, nameProject);
-                    } else {    
-                        currentBuild.result = 'FAILURE'
-                        error ('Rama <${nameRelease}> no se creo')
-                    }
-                } else {
-                    echo "Se crea rama <${nameRelease}>"
-                    gitUtils.crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
-                    if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
-                        echo "Rama <${nameRelease}> creada correctamente"
-                        echo "Ahora se llama a despliegue continuo..."
-                        despliegue.call(stageOptions, nameProject);
-                    } else  {    
-                        currentBuild.result = 'FAILURE'
-                        error ('Rama <${nameRelease}> no se creo')
-                    }
                 }
+
+                echo "Se crea rama <${nameRelease}>"
+                gitUtils.crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
+                if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
+                        echo "Rama <${nameRelease}> creada correctamente"
+                        echo "Ahora se llama a despliegue continuo..."
+                        despliegue.call(stageOptions, nameProject);
+                } else {    
+                        currentBuild.result = 'FAILURE'
+                        error ('Rama <${nameRelease}> no se creo')
+                }
+                 
                 
                 //Este stage sólo debe estar disponible para la rama develop.  
                 //Si IC de develop OK = ejecución de pipeline CD para rama Release creada  
