@@ -30,7 +30,7 @@ def call(stageOptions, nameProject){
    def buildEjecutado = false;
    def projectKey = "${nameProject}-${env.BRANCH_NAME}-${env.BUILD_ID}"
    //release-v{major}-{minor}-{patch}
-   def nameRelease = "release-v1-1-0"
+   def nameRelease = "release-v1-0-0"
   
          stage("Validar"){
 
