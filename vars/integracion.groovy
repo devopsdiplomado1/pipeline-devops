@@ -12,12 +12,18 @@ def borrarRama(String rama){
 }
 
 def chequearSiExisteRama(String rama){
-	def output = sh (script: "git ls-remote --heads ${rama}", returnStdout: true)
-	if (output?.trim()) {
-		return true;
-	} else {
-		return false;
-	}
+    def existe = false;
+    try {
+        def output = sh (script: "git ls-remote --heads ${rama}", returnStdout: true)
+        if (output?.trim()) {
+		    existe = true;
+	    } 
+    } catch (Exception a){
+        existe = false;
+
+    }
+	return existe
+
 }
 
 def call(stageOptions, nameProject){
@@ -89,13 +95,13 @@ def call(stageOptions, nameProject){
         stage('nexusUpload') {  
             env.TAREA =  env.STAGE_NAME 
             echo "STAGE ${env.STAGE_NAME}"  
-            if ((stageOptions.contains('Nexus') || (stageOptions =='')) && (buildEjecutado) )          
+            if ((stageOptions.contains('nexusUpload') || (stageOptions =='')) && (buildEjecutado) )          
                 nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '2.0.1']]]                     
         }  
 
         stage('gitCreateRelease') {  
             //rodrigo
-            if ("${env.BRANCH_NAME}" =~ /(develop)/) {
+            if ( ("${env.BRANCH_NAME}" =~ /(develop)/) && (stageOptions.contains('gitCreateRelease') || (stageOptions =='')) && (buildEjecutado) ) {
                 env.TAREA =  env.STAGE_NAME 
                 echo "STAGE ${env.STAGE_NAME}"
                 echo "entro a gitCreateRelease" 
