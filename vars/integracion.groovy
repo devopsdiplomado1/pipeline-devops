@@ -1,10 +1,14 @@
 def crearRamaGit(String origin, String newRranch){
-    sh '''
-        git fetch -p
-        git checkout '''+origin+'''; git pull
-        git checkout -b '''+newRranch+'''
-        git push origin '''+newRranch+'''
-    '''
+    try {
+        sh '''
+            git fetch -p
+            git checkout '''+origin+'''; git pull
+            git checkout -b '''+newRranch+'''
+            git push origin '''+newRranch+'''
+        '''
+    } catch (Exception a){ } 
+
+
 }
 
 def borrarRama(String rama){
@@ -15,7 +19,7 @@ def borrarRama(String rama){
     } catch (Exception a){ }   
 
     try {
-        sh "git push origin --d}elete ${rama}"
+        sh "git push origin --delete ${rama}"
         sh "git fetch -p"
     } catch (Exception a){ }      
     
@@ -65,7 +69,6 @@ def chequearSiExisteRama(String rama){
 def call(stageOptions, nameProject){
    def buildEjecutado = false;
    def projectKey = "${nameProject}-${env.BRANCH_NAME}-${env.BUILD_ID}"
-   //release-v{major}-{minor}-{patch}
    def nameRelease = "release-v1-0-0"
   
          stage("Validar"){
@@ -147,18 +150,22 @@ def call(stageOptions, nameProject){
                     borrarRama("${nameRelease}")
                     echo "Se crea rama <${nameRelease}>"
                     crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
-                    if (chequearSiExisteRama("${nameRelease}"))
+                    if (chequearSiExisteRama("${nameRelease}")) {
                           echo "Rama <${nameRelease}> creada correctamente"
-                    else {    
+                          echo "Ahora se llama a despliegue continuo..."
+                          despliegue.call(stageOptions, nameProject);
+                    } else {    
                         currentBuild.result = 'FAILURE'
                         error ('Rama <${nameRelease}> no se creo')
                     }
                 } else {
                     echo "Se crea rama <${nameRelease}>"
                     crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
-                    if (chequearSiExisteRama("${nameRelease}"))
+                    if (chequearSiExisteRama("${nameRelease}")) {
                           echo "Rama <${nameRelease}> creada correctamente"
-                    else  {    
+                          echo "Ahora se llama a despliegue continuo..."
+                          despliegue.call(stageOptions, nameProject);
+                    } else  {    
                         currentBuild.result = 'FAILURE'
                         error ('Rama <${nameRelease}> no se creo')
                     }
