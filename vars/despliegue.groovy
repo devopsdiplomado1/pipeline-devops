@@ -58,7 +58,7 @@
             env.TAREA =  env.STAGE_NAME 
             echo 'stage test'
             if ((stageOptions.contains('test') || (stageOptions ==''))  ) 
-                sh 'curl -X GET "http://localhost:8080/rest/mscovid/test?msg=testing"'
+                sh 'curl -X GET "http://localhost:8082/rest/mscovid/test?msg=testing"'
         }  
 
          stage("gitMergeMaster"){   
