@@ -26,9 +26,9 @@
             //Andres 
             env.TAREA = env.STAGE_NAME
 
-            echo $env.BRANCH_NAME
+            echo env.BRANCH_NAME
 
-            DIFF = sh(returnStdout: true, script: "git diff $env.BRANCH_NAME origin/main").trim()
+            DIFF = sh(returnStdout: true, script: "git diff ${env.BRANCH_NAME} origin/main").trim()
             echo DIFF
         }
 
