@@ -28,7 +28,7 @@
 
             echo env.BRANCH_NAME
 
-            DIFF = sh(returnStdout: true, script: "git diff origin/${env.BRANCH_NAME} origin/main").trim()
+            DIFF = sh(returnStdout: true, script: "git diff ${env.BRANCH_NAME} main").trim()
             echo DIFF
         }
 
