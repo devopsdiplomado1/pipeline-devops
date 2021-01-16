@@ -30,7 +30,7 @@ pipeline {
         stage('Pipeline') {
             steps {
                 script {
-				def pipeline = ''
+				env.NOM_PIPELINE = ''
                 env.TAREA = ''
                 echo "A.-Stages seleccionados: ${stage}"   
                 echo "B.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
@@ -51,16 +51,16 @@ pipeline {
 
                 if (isIntegracion()) {
                         echo "Entro a Integracion" 
-						pipeline = 'CI'
+						env.NOM_PIPELINE = 'CI'
                         integracion.call(stage, getNombreProyecto());
                 } else if (isDespliegue()){ 
-                        echo "Entro a Despliegue"
-                        pipeline = 'CD'
-						if (cumplePatron()){
-							despliegue.call(stage, getNombreProyecto());
-						} else {
-							error ("La rama release no cumple con el patrón release-v{major}-{minor}-{patch}")
-						}
+					echo "Entro a Despliegue"
+					env.NOM_PIPELINE = 'CD'
+					if (cumplePatron()){
+						despliegue.call(stage, getNombreProyecto());
+					} else {
+						error ("La rama release no cumple con el patrón release-v{major}-{minor}-{patch}")
+					}
                 }  else {
                         error ("Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline")
                 }
@@ -73,14 +73,15 @@ pipeline {
     }
 
     post {
+		//Tamara
         success{
-            // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: OK]
-            slackSend channel: "#lab-pipeline-status-grupo1", color: 'good', message: "[Grupo 1][Pipeline ${pipeline}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: OK]"           
+            // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: OK] channel: "#lab-pipeline-status-grupo1"
+            slackSend color: 'good', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: OK]"           
         }
 
         failure{
-            // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: No OK]
-            slackSend channel: "#lab-pipeline-status-grupo1", color: 'danger', message: "[Grupo 1][Pipeline ${pipeline}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: No OK]"                   
+            // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: No OK] channel: "#lab-pipeline-status-grupo1"
+            slackSend color: 'danger', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: No OK]"                   
         }
     }
 
