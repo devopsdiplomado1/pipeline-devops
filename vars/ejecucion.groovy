@@ -10,11 +10,11 @@ def getNombreProyecto(){
 } 
 
 def isProyectoMavenOK(){
-         return ( (fileExists('mvnw')  &&  fileExists('mvnw.cmd')) );
+    return ( (fileExists('mvnw')  &&  fileExists('mvnw.cmd')) );
 }
 
 def cumplePatron(){
-	return ("${env.BRANCH_NAME}" =~ /release-v\d{1,2}\-\d{1,2}\-\d{1,3}/)
+    return ("${env.BRANCH_NAME}" =~ /release-v\d{1,2}\-\d{1,2}\-\d{1,3}/)
 }
 
 def call(){
@@ -54,13 +54,13 @@ pipeline {
 						env.NOM_PIPELINE = 'CI'
                         integracion.call(stage, getNombreProyecto());
                 } else if (isDespliegue()){ 
-					echo "Entro a Despliegue"
-					env.NOM_PIPELINE = 'CD'
-					if (cumplePatron()){
-						despliegue.call(stage, getNombreProyecto());
-					} else {
-						error ("La rama release no cumple con el patrón release-v{major}-{minor}-{patch}")
-					}
+			echo "Entro a Despliegue"
+			env.NOM_PIPELINE = 'CD'
+			if (cumplePatron()){
+				despliegue.call(stage, getNombreProyecto());
+			} else {
+				error ("La rama release no cumple con el patrón release-v{major}-{minor}-{patch}")
+			}
                 }  else {
                         error ("Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline")
                 }
@@ -73,7 +73,7 @@ pipeline {
     }
 
     post {
-		//Tamara
+	//Tamara
         success{
             // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: OK] channel: "#lab-pipeline-status-grupo1"
             slackSend color: 'good', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: OK]"           
