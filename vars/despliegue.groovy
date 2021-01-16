@@ -28,6 +28,9 @@
 
             echo env.BRANCH_NAME
             
+            CHECKOUT = sh(returnStdout: true, script: "git checkout main").trim()
+            echo CHECKOUT
+            
             STATUS = sh(returnStdout: true, script: "git status").trim()
             echo STATUS
             
