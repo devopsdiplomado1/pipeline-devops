@@ -1,9 +1,9 @@
 def isIntegracion() {
-    return ("${env.BRANCH_NAME}" =~ /(feature|develop)/)
+    return ("${env.GIT_BRANCH}" =~ /(feature|develop)/)
 }
 
 def isDespliegue() {
-    return ("${env.BRANCH_NAME}" =~ /(release*)/)
+    return ("${env.GIT_BRANCH}" =~ /(release*)/)
 }
 def getNombreProyecto(){
     return env.GIT_URL.replaceAll('https://github.com/devopsdiplomado1/', '').replaceAll('.git', '');
@@ -30,7 +30,7 @@ pipeline {
                 env.TAREA = ''
                 echo "A.-Stages seleccionados: ${stage}"   
                 echo "B.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
-                echo "C.-Rama ${env.BRANCH_NAME}" 
+                echo "C.-Rama ${env.GIT_BRANCH}" 
                 echo "D.-Nombre del projecto ${getNombreProyecto()}" 
                 echo "E.-Estan los archivos maven? ${isProyectoMavenOK()}" 
 
@@ -54,7 +54,7 @@ pipeline {
                         //tamara - cesar 
                         despliegue.call(stage, getNombreProyecto());                 
                 }  else {
-                        error ("Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline")
+                        error ("Esta rama ${env.GIT_BRANCH} no puede ejecutarse con este pipeline")
                 }
 
                 }
