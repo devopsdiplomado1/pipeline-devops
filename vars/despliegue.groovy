@@ -78,10 +78,16 @@
 
         } 
         stage("gitTagMaster"){    
-             //Joram
-            env.TAREA =  env.STAGE_NAME 
-            echo 'stage gitTagMaster'  
-
+            //Joram
+            env.TAREA =  env.BRANCH_NAME   
+            echo 'Tag Main: ${tag}' 
+                if ((stageOptions.contains('gitTagMaster') || (stageOptions =='')) ) { 
+                   'git checkout main'
+                   'git fetch --all'
+                   'git tag ${tag}'
+                   'git push origin ${tag}'
+                } 
+            
         } 
 
              
