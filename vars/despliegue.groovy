@@ -34,7 +34,7 @@
             BRANCH = sh(returnStdout: true, script: "git branch")
             echo BRANCH
 
-            DIFF = sh(returnStdout: true, script: "git diff ${env.BRANCH_NAME} feature-estadopais")
+            DIFF = sh(returnStdout: true, script: "git diff main feature-estadopais")
             echo DIFF
         }
 
