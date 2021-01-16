@@ -13,11 +13,16 @@ def isProyectoMavenOK(){
          return ( (fileExists('mvnw')  &&  fileExists('mvnw.cmd')) );
 }
 
+def cumplePatron(){
+	return ("${env.BRANCH_NAME}" =~ /release-v\d{1,2}\-\d{1,2}\-\d{1,3}/)
+}
+
 def call(){
 pipeline {
     agent any
     parameters { 
         string(name: 'stage' , defaultValue: '', description: '')
+		string{name: 'pipeline', defaultValue: '', description: ''}
     }
 
 
@@ -47,12 +52,16 @@ pipeline {
 
                 if (isIntegracion()) {
                         echo "Entro a Integracion" 
+						pipeline = 'CI'
                         integracion.call(stage, getNombreProyecto());
                 } else if (isDespliegue()){ 
                         echo "Entro a Despliegue"
-                        //Validar formato de nombre de rama release según patrón, release-v{major}-{minor}-{patch}
-                        //tamara - cesar 
-                        despliegue.call(stage, getNombreProyecto());                 
+                        pipeline = 'CD'
+						if (cumplePatron()){
+							despliegue.call(stage, getNombreProyecto());
+						} else {
+							error ("La rama release no cumple con el patrón release-v{major}-{minor}-{patch}")
+						}
                 }  else {
                         error ("Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline")
                 }
@@ -65,15 +74,14 @@ pipeline {
     }
 
     post {
-        //Tamara
         success{
-            //: [Nombre Alumno][Nombre Job][buildTool] Ejecución exitosa
-            slackSend color: 'good', message: "[Grupo 1][${env.JOB_NAME}]Ejecucion exitosa"           
+            // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: OK]
+            slackSend channel: "#lab-pipeline-status-grupo1", color: 'good', message: "[Grupo 1][Pipeline ${params.pipeline}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: OK]"           
         }
 
         failure{
-            //[Nombre Alumno][Nombre Job][buildTool] Ejecución fallida en stage [Stage]
-            slackSend color: 'danger', message: "[Grupo 1][${env.JOB_NAME}]Ejecución fallida en stage [${env.TAREA}]"                   
+            // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: No OK]
+            slackSend channel: "#lab-pipeline-status-grupo1", color: 'danger', message: "[Grupo 1][Pipeline ${params.pipeline}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: No OK]"                   
         }
     }
 
