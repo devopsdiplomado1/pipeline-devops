@@ -63,8 +63,7 @@ def chequearSiExisteRama(String rama){
 def crearMerge(String releaseBranch, String targetBranch){
     try {
         sh '''
-            git checkout '''+releaseBranch+'''
-            git pull
+            git pull origin '''+releaseBranch+'''
             git checkout '''+targetBranch+'''
             git fetch -p
             git merge '''+releaseBranch+'''
