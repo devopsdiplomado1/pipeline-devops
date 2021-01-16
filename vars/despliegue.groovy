@@ -69,13 +69,13 @@
              //cesar 
             env.TAREA =  env.STAGE_NAME  
             echo 'stage gitMergeMaster' 
-            gitUtils.crearMerge("${env.GIT_BRANCH}", "main-cesar")
+            gitUtils.crearMerge("${env.GIT_BRANCH}", "main")
         } 
         stage("gitMergeDevelop"){  
              //cesar  
             env.TAREA =  env.STAGE_NAME   
             echo 'stage gitMergeDevelop'
-            gitUtils.crearMerge("${env.GIT_BRANCH}", "develop-cesar")
+            gitUtils.crearMerge("${env.GIT_BRANCH}", "develop")
 
         } 
         stage("gitTagMaster"){    
