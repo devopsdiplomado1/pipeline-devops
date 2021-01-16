@@ -27,6 +27,12 @@
             env.TAREA = env.STAGE_NAME
 
             echo env.BRANCH_NAME
+            
+            STATUS = sh(returnStdout: true, script: "git status").trim()
+            echo STATUS
+            
+            BRANCH = sh(returnStdout: true, script: "git branch").trim()
+            echo BRANCH
 
             DIFF = sh(returnStdout: true, script: "git diff ${env.BRANCH_NAME} main").trim()
             echo DIFF
