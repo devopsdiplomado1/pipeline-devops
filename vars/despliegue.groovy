@@ -21,6 +21,22 @@
             }   
 
        }
+        
+        stage("gitDiff"){   
+            //Andres 
+            env.TAREA = env.STAGE_NAME
+
+            echo env.BRANCH_NAME
+            
+            STATUS = sh(returnStdout: true, script: "git status")
+            echo STATUS
+            
+            BRANCH = sh(returnStdout: true, script: "git branch")
+            echo BRANCH
+
+            DIFF = sh(returnStdout: true, script: "git diff ${env.BRANCH_NAME} main")
+            echo DIFF
+        }
 
         stage("nexusDownload"){   
             //rodrigo 
@@ -54,25 +70,6 @@
             if ((stageOptions.contains('test') || (stageOptions ==''))  ) 
                 sh 'curl -X GET "http://localhost:8088/rest/mscovid/test?msg=testing"'
         }  
-        
-        stage("gitDiff"){   
-            //Andres 
-            env.TAREA = env.STAGE_NAME
-
-            echo env.BRANCH_NAME
-            
-            CHECKOUT = sh(returnStdout: true, script: "git checkout main")
-            echo CHECKOUT
-            
-            STATUS = sh(returnStdout: true, script: "git status")
-            echo STATUS
-            
-            BRANCH = sh(returnStdout: true, script: "git branch")
-            echo BRANCH
-
-            DIFF = sh(returnStdout: true, script: "git diff ${env.BRANCH_NAME} main")
-            echo DIFF
-        }
 
          stage("gitMergeMaster"){   
              //cesar 
