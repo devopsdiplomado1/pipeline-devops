@@ -21,7 +21,7 @@ def call(){
 pipeline {
     agent any
     parameters { 
-        string(name: 'stage', defaultValue: '', description: ''),
+        string(name: 'stage', defaultValue: '', description: '')
 		string(name: 'pipeline', defaultValue: '', description: '')
     }
 
