@@ -52,7 +52,7 @@
             echo 'stage run'  
 
             if ((stageOptions.contains('run') || (stageOptions =='')) && (downloadOK)){ 
-                sh "java -jar DevOpsUsach2020-0.0.1.jar &"
+                sh "java -jar DevOpsUsach2020-0.0.1.jar --server.port=8888 &"
                 //sh "nohup mvn spring-boot:run -Dserver.port=8088 &"
                 sleep 20 
             }                          
