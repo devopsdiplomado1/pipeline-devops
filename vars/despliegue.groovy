@@ -21,14 +21,20 @@
             }   
 
        }
-
+        
         stage("gitDiff"){   
             //Andres 
             env.TAREA = env.STAGE_NAME
 
             echo env.BRANCH_NAME
+            
+            STATUS = sh(returnStdout: true, script: "git status")
+            echo STATUS
+            
+            BRANCH = sh(returnStdout: true, script: "git branch")
+            echo BRANCH
 
-            DIFF = sh(returnStdout: true, script: "git diff ${env.BRANCH_NAME} main").trim()
+            DIFF = sh(returnStdout: true, script: "git diff ${env.BRANCH_NAME} main")
             echo DIFF
         }
 
