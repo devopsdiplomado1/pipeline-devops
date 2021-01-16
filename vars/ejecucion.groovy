@@ -22,16 +22,15 @@ pipeline {
     agent any
     parameters { 
         string(name: 'stage', defaultValue: '', description: '')
-		string(name: 'pipeline', defaultValue: '', description: '')
     }
 
 
     stages {
-
+	
         stage('Pipeline') {
             steps {
                 script {
-
+				def pipeline = ''
                 env.TAREA = ''
                 echo "A.-Stages seleccionados: ${stage}"   
                 echo "B.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
@@ -76,12 +75,12 @@ pipeline {
     post {
         success{
             // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: OK]
-            slackSend channel: "#lab-pipeline-status-grupo1", color: 'good', message: "[Grupo 1][Pipeline ${params.pipeline}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: OK]"           
+            slackSend channel: "#lab-pipeline-status-grupo1", color: 'good', message: "[Grupo 1][Pipeline ${pipeline}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: OK]"           
         }
 
         failure{
             // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: No OK]
-            slackSend channel: "#lab-pipeline-status-grupo1", color: 'danger', message: "[Grupo 1][Pipeline ${params.pipeline}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: No OK]"                   
+            slackSend channel: "#lab-pipeline-status-grupo1", color: 'danger', message: "[Grupo 1][Pipeline ${pipeline}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: No OK]"                   
         }
     }
 
