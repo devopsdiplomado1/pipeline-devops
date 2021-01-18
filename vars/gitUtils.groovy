@@ -14,15 +14,17 @@ def crearRamaGit(String origin, String newRranch){
 def tagGit(String origin, String newRranch){
     try {
         sh '''
-            git checkout '''+origin+'''
-            git fetch --all
-            git tag ${tag}
-            git push origin ${tag}
+            git push '''+newRranch+''' :refs/tags/release-v1-0-0
+            git tag -fa release-v1-0-0            
+            git push origin HEAD:'''+origin+'''
+
         '''
+       
     } catch (Exception a){ } 
 
 
 }
+
 
 def diffRama(String rama){
     try {        
