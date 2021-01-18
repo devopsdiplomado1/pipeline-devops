@@ -3,6 +3,7 @@ def call(stageOptions, nameProject){
    def buildEjecutado = false;
    def projectKey = "${nameProject}-${env.BRANCH_NAME}-${env.BUILD_ID}"
    def nameRelease = "release-v1-0-0"
+   int contStages = 0;
   
          stage("Validar"){
 
@@ -77,6 +78,7 @@ def call(stageOptions, nameProject){
                 env.TAREA =  env.STAGE_NAME 
                 echo "STAGE ${env.STAGE_NAME}"
                 echo "entro a gitCreateRelease" 
+                referenciaRelease(${nameRelease})
 
                 if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
                     echo "Se borra rama <${nameRelease}>"
