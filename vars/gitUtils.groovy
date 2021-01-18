@@ -11,7 +11,7 @@ def crearRamaGit(String origin, String newRranch){
     try {
         sh '''
             git checkout -b '''+newRranch+'''
-            git push -u origin (HEAD detached at origin/'''+newRranch+''')
+            git push -u origin '''+newRranch+'''
         '''
     } catch (Exception a){ } 
 
