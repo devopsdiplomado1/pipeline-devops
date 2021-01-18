@@ -51,11 +51,11 @@ pipeline {
 
                 if (isIntegracion()) {
                         echo "Entro a Integracion" 
-						env.NOM_PIPELINE = 'CI'
+						env.NOM_PIPELINE = 'IC'
                         integracion.call(stage, getNombreProyecto());
                 } else if (isDespliegue()){ 
 			            echo "Entro a Despliegue"
-			            env.NOM_PIPELINE = 'CD'
+			            env.NOM_PIPELINE = 'Release'
 			            if (cumplePatron()){
 				            despliegue.call(stage, getNombreProyecto());
 			            } else {
