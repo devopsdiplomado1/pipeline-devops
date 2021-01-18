@@ -11,19 +11,7 @@ def crearRamaGit(String origin, String newRranch){
 
 }
 
-def tagGit(String origin, String newRranch){
-    try {
-        sh '''
-            git push '''+newRranch+''' :refs/tags/release-v1-0-0
-            git tag -fa release-v1-0-0            
-            git push origin HEAD:'''+origin+'''
 
-        '''
-       
-    } catch (Exception a){ } 
-
-
-}
 
 
 def diffRama(String rama){
@@ -106,4 +94,20 @@ def crearMerge(String originBranch, String targetBranch){
             git push origin '''+targetBranch+'''
         '''
     } catch (Exception a){ } 
+}
+
+
+def tagGit(String origin, String newRranch){
+    try {
+        sh '''
+            git checkout '''+newRranch+'''
+            git push '''+newRranch+''' :refs/tags/release-v1-0-0
+            git tag -fa release-v1-0-0            
+            git push origin HEAD:'''+origin+'''
+
+        '''
+       
+    } catch (Exception a){ } 
+
+
 }

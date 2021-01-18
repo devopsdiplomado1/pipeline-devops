@@ -100,11 +100,11 @@
         } 
         stage("gitTagMaster"){    
             //Joram
-            env.TAREA =  env.BRANCH_NAME   
+            env.TAREA =  env.STAGE_NAME   
             echo 'Tag Main: ${tag}' 
             if(contStages == 6){
-                    if ((stageOptions.contains('gitTagMaster') || (stageOptions =='')) ) {                    
-                        gitUtils.tagGit("origin/main", "origin/develop")
+                    if ((stageOptions.contains('gitTagMaster') || (stageOptions =='')) ) {                   
+                        gitUtils.tagGit("origin/main", "origin/${env.GIT_BRANCH}")
                     } 
             } else {
                 currentBuild.result = 'FAILURE'
