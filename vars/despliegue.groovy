@@ -27,10 +27,10 @@
             //Andres 
             env.TAREA = env.STAGE_NAME
 
-            echo env.GIT_BRANCH
-
-            DIFF = sh(returnStdout: true, script: "git diff ${env.GIT_BRANCH} origin/main").trim()
-            echo DIFF
+            //echo env.GIT_BRANCH
+            //DIFF = sh(returnStdout: true, script: "git diff ${env.GIT_BRANCH} origin/main").trim()
+            //echo DIFF
+            echo gitUtils.diffRama("${env.GIT_BRANCH}")            
             contStages++;
         }
 

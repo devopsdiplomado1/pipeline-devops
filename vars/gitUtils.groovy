@@ -24,6 +24,16 @@ def tagGit(String origin, String newRranch){
 
 }
 
+def diffRama(String rama){
+    
+    try {
+        def diferencia = sh "git diff ${rama} origin/main"
+    } catch (Exception a){ }   
+
+    return diferencia
+    
+}
+
 def borrarRama(String rama){
     
     try {
