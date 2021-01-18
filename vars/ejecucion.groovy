@@ -54,13 +54,13 @@ pipeline {
 						env.NOM_PIPELINE = 'CI'
                         integracion.call(stage, getNombreProyecto());
                 } else if (isDespliegue()){ 
-			echo "Entro a Despliegue"
-			env.NOM_PIPELINE = 'CD'
-			if (cumplePatron()){
-				despliegue.call(stage, getNombreProyecto());
-			} else {
-				error ("La rama release no cumple con el patrón release-v{major}-{minor}-{patch}")
-			}
+			            echo "Entro a Despliegue"
+			            env.NOM_PIPELINE = 'CD'
+			            if (cumplePatron()){
+				            despliegue.call(stage, getNombreProyecto());
+			            } else {
+				            error ("La rama release no cumple con el patrón release-v{major}-{minor}-{patch}")
+			            }
                 }  else {
                         error ("Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline")
                 }
