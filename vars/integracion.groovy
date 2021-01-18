@@ -72,7 +72,8 @@ def call(stageOptions, nameProject){
                 try {
                     timeout(1) {
                         def qg = waitForQualityGate('sonar')
-                        if (qg.status != 'OK') {
+
+                        if (!qg.contains('window.serverStatus = ''UP''')) {
                             Error "Fallo el llamado a Sonar, se espero 1 minuto, cambie el tiempo si es necesario o verifique la instalacion! failure: ${qg.status}"
                         }
                     }    
