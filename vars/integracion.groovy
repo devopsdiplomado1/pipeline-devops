@@ -28,7 +28,7 @@ def call(stageOptions, nameProject){
                 buildEjecutado =false;
                 echo "STAGE ${env.STAGE_NAME}"
                 if (stageOptions.contains('Compile Code') || (stageOptions ==''))  { 
-                    sh 'mvnw clean compile -e'    
+                    sh './mvnw clean compile -e'    
                     contStages++                
                 }
         }
@@ -37,7 +37,7 @@ def call(stageOptions, nameProject){
                 env.TAREA =  env.STAGE_NAME 
                 echo "STAGE ${env.STAGE_NAME}" 
                 if ((stageOptions.contains('Test') || (stageOptions =='')) ) {      
-                    sh 'mvnw clean test -e'
+                    sh './mvnw clean test -e'
                     contStages++
                 } 
         }
@@ -45,7 +45,7 @@ def call(stageOptions, nameProject){
                 env.TAREA =  env.STAGE_NAME 
                 echo "STAGE ${env.STAGE_NAME}"
                 if ((stageOptions.contains('Test') || (stageOptions ==''))) {      
-                    sh 'mvnw clean package -e' 
+                    sh './mvnw clean package -e' 
                     buildEjecutado =true;
                     contStages++
                 }
