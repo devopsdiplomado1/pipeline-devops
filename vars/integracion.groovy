@@ -57,14 +57,15 @@ def call(stageOptions, nameProject){
                 currentBuild.result = 'FAILURE'
                 echo "No se puede ejecutar Sonar sin haber ejecutado un Build"
                 buildEjecutado = false;
-                contStages++
+                
             }    
 
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) ) {                 
                     echo "Aplicando Sonar al proyecto:${projectKey}"
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${projectKey} -Dsonar.java.binaries=build"   
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${projectKey} -Dsonar.java.binaries=build"  
+                    contStages++ 
                    }    
             }  
         }         
