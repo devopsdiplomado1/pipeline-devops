@@ -78,7 +78,11 @@ def call(stageOptions, nameProject){
                         currentBuild.result = 'FAILURE'
                         error ("${avisoSonar}")
                     }       
-                } catch (Exception a){ } 
+                } catch (Exception a){ 
+                        def avisoSonar = "Sonar al parecer no esta operativo: ${env.SONAR_HOST_URL}"
+                        currentBuild.result = 'FAILURE'
+                        error ("${avisoSonar}")
+                } 
 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) ) {                 
                     echo "Aplicando Sonar al proyecto:${projectKey}"
