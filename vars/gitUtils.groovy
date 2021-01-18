@@ -81,6 +81,12 @@ def referenciaDevelop(){
     } catch (Exception a){ } 
 }
 
+def referenciaRelease(String targetBranch){
+    try {
+        sh "git fetch origin ${targetBranch}:refs/remotes/origin/${targetBranch}"
+    } catch (Exception a){ } 
+}
+
 
 def crearMerge(String originBranch, String targetBranch){
     try {
