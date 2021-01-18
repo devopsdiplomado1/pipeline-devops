@@ -75,12 +75,10 @@ pipeline {
     post {
 	//Tamara
         success{
-            // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: OK] channel: "#lab-pipeline-status-grupo1"
             slackSend color: 'good', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: OK]"           
         }
 
         failure{
-            // [Grupo 1][Pipeline CI/Release][Rama: nombreRama][Stage: nombreStage][Resultado: No OK] channel: "#lab-pipeline-status-grupo1"
             slackSend color: 'danger', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: No OK]"                   
         }
     }
