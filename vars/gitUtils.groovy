@@ -28,7 +28,7 @@ def diffRama(String rama){
     
     try {
         sh "git fetch origin main:refs/remotes/origin/main"
-        def diferencia = sh "git diff remotes/origin/${rama} main"
+        def diferencia = sh "git diff remotes/origin/${rama} origin/main"
     } catch (Exception a){ }   
 
     return diferencia
