@@ -60,6 +60,10 @@ def call(stageOptions, nameProject){
                 
             }    
 
+            echo '${env.SONAR_HOST_URL}'
+            sh "curl -X GET '"${env.SONAR_HOST_URL}"'"
+            echo "xxxxxxxxxxxx"
+
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) ) {                 
@@ -68,20 +72,7 @@ def call(stageOptions, nameProject){
                     contStages++ 
                    }    
             }  
-            script {
-                try {
-                    timeout(1) {
-                        def qg = waitForQualityGate('sonar')
-
-                        if (!qg.contains('UP')) {
-                            Error "Fallo el llamado a Sonar, se espero 1 minuto, cambie el tiempo si es necesario o verifique la instalacion! failure: ${qg.status}"
-                        }
-                    }    
-                } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
-                    currentBuild.result = "FAILURE"
-                    env.shouldBuild = "false"
-                }
-            }    
+            
           
 
 
