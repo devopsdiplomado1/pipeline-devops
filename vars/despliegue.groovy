@@ -30,6 +30,7 @@
             //echo env.GIT_BRANCH
             //DIFF = sh(returnStdout: true, script: "git diff ${env.GIT_BRANCH} origin/main").trim()
             //echo DIFF
+            gitUtils.referenciaMain()
             gitUtils.diffRama("${env.GIT_BRANCH}")            
             contStages++;
         }
@@ -88,6 +89,7 @@
             env.TAREA =  env.STAGE_NAME   
             echo 'stage gitMergeDevelop'
             if(contStages == 5){
+                gitUtils.referenciaDevelop()
                 gitUtils.crearMerge("origin/main", "origin/develop")
                 contStages++;
             } else {

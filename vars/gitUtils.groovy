@@ -25,8 +25,7 @@ def tagGit(String origin, String newRranch){
 }
 
 def diffRama(String rama){
-    try {
-        sh "git fetch origin main:refs/remotes/origin/main"
+    try {        
         sh "git diff remotes/origin/${rama} origin/main"
     } catch (Exception a){ }   
     
@@ -80,9 +79,23 @@ def chequearSiExisteRama(String rama){
 	return existe
 
 }
+def referenciaMain(){
+    try {
+        sh "git fetch origin main:refs/remotes/origin/main"
+    } catch (Exception a){ } 
+}
+
+def referenciaDevelop(){
+    try {
+        sh "git fetch origin develop:refs/remotes/origin/develop"
+    } catch (Exception a){ } 
+}
+
 
 def crearMerge(String originBranch, String targetBranch){
     try {
+        sh "git fetch origin main:refs/remotes/origin/main"
+
         sh '''
             git fetch -p
             git checkout '''+targetBranch+'''
