@@ -28,7 +28,8 @@ def call(stageOptions, nameProject){
                 buildEjecutado =false;
                 echo "STAGE ${env.STAGE_NAME}"
                 if (stageOptions.contains('Compile Code') || (stageOptions ==''))  { 
-                    sh 'mvn clean compile -e'                    
+                    sh 'mvn clean compile -e'    
+                    contStages++                
                 }
         }
 
@@ -37,6 +38,7 @@ def call(stageOptions, nameProject){
                 echo "STAGE ${env.STAGE_NAME}" 
                 if ((stageOptions.contains('Test') || (stageOptions =='')) ) {      
                     sh 'mvn clean test -e'
+                    contStages++
                 } 
         }
         stage('jar') {        
@@ -45,6 +47,7 @@ def call(stageOptions, nameProject){
                 if ((stageOptions.contains('Test') || (stageOptions ==''))) {      
                     sh 'mvn clean package -e' 
                     buildEjecutado =true;
+                    contStages++
                 }
         }
         stage('sonar') {
@@ -54,6 +57,7 @@ def call(stageOptions, nameProject){
                 currentBuild.result = 'FAILURE'
                 echo "No se puede ejecutar Sonar sin haber ejecutado un Build"
                 buildEjecutado = false;
+                contStages++
             }    
 
             def scannerHome = tool 'sonar-scanner';    
@@ -68,13 +72,15 @@ def call(stageOptions, nameProject){
         stage('nexusUpload') {  
             env.TAREA =  env.STAGE_NAME 
             echo "STAGE ${env.STAGE_NAME}"  
-            if ((stageOptions.contains('nexusUpload') || (stageOptions =='')) && (buildEjecutado) )          
+            if ((stageOptions.contains('nexusUpload') || (stageOptions =='')) && (buildEjecutado) && (contStages == 4)) {         
                 nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1']]]                     
+                contStages++
+            }   
         }  
 
         stage('gitCreateRelease') {  
             //rodrigo
-            if ( ("${env.BRANCH_NAME}" =~ /(develop)/) && (stageOptions.contains('gitCreateRelease') || (stageOptions =='')) && (buildEjecutado) ) {
+            if ( ("${env.BRANCH_NAME}" =~ /(develop)/) && (stageOptions.contains('gitCreateRelease') || (stageOptions =='')) && (buildEjecutado) && (contStages == 5)) {
                 env.TAREA =  env.STAGE_NAME 
                 echo "STAGE ${env.STAGE_NAME}"
                 echo "entro a gitCreateRelease" 
