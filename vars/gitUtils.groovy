@@ -106,10 +106,8 @@ def crearMerge(String originBranch, String targetBranch){
 def tagGit(String origin, String newRranch){
     try {
         sh '''
-            git checkout '''+newRranch+'''
-            git push '''+newRranch+''' :refs/tags/release-v1-0-0
             git tag -fa release-v1-0-0            
-            git push origin HEAD:'''+origin+'''
+            git push '''+origin+''' release-v1-0-0
 
         '''
        
