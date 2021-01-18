@@ -35,6 +35,7 @@ def borrarRama(String rama){
 
     try {
         sh "git push origin --delete ${rama}"
+        sh "git push origin --delete refs/heads/${rama}"
         sh "git fetch -p"
     } catch (Exception a){ }      
     
