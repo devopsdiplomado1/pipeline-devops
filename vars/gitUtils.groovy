@@ -27,7 +27,7 @@ def tagGit(String origin, String newRranch){
 def diffRama(String rama){
     
     try {
-        def diferencia = sh "git diff ${rama} main"
+        def diferencia = sh "git diff remotes/origin/${rama} remotes/origin/main"
     } catch (Exception a){ }   
 
     return diferencia
