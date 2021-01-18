@@ -1,6 +1,7 @@
     def call(stageOptions, nameProject){
   
         def downloadOK = false;
+        int contStages = 0;
 
          stage("Validar"){
 
@@ -50,7 +51,8 @@
             if (!downloadOK){
                 currentBuild.result = 'FAILURE'
                 error ('No se puede seguir ejecutando este pipeline, ya que no se descargo el artefacto')
-            }   
+            }
+            contStages++;
         } 
         stage("run"){
             //rodrigo
@@ -61,7 +63,8 @@
                 //sh "java -jar DevOpsUsach2020-0.0.1.jar &"
                 sh "nohup mvn spring-boot:run -Dserver.port=8088 &"
                 sleep 20 
-            }                          
+            }    
+            contStages++;                       
         }
         stage("test"){
             //rodrigo
@@ -69,18 +72,31 @@
             echo 'stage test'
             if ((stageOptions.contains('test') || (stageOptions ==''))  ) 
                 sh 'curl -X GET "http://localhost:8088/rest/mscovid/test?msg=testing"'
+            contStages++;
         }  
 
          stage("gitMergeMaster"){   
              //cesar 
             env.TAREA =  env.STAGE_NAME  
             echo 'stage gitMergeMaster' 
+            if(contStages == 4){
+                gitUtils.crearMerge("${env.GIT_BRANCH}", "main")
+                contStages++;
+            } else {
+                echo "No se ejecuta merge en main, ya que no se han ejecutado todos los stages"
+            }
 
         } 
         stage("gitMergeDevelop"){  
              //cesar  
             env.TAREA =  env.STAGE_NAME   
             echo 'stage gitMergeDevelop'
+            if(contStages == 5){
+                gitUtils.crearMerge("main", "develop")
+                contStages++;
+            } else {
+                echo "No se ejecuta merge en develop, ya que no se han ejecutado todos los stages"
+            }
 
         } 
         stage("gitTagMaster"){    

@@ -59,3 +59,15 @@ def chequearSiExisteRama(String rama){
 	return existe
 
 }
+
+def crearMerge(String originBranch, String targetBranch){
+    try {
+        sh '''
+            git fetch -p
+            git checkout '''+targetBranch+'''
+            git pull
+            git merge '''+originBranch+'''
+            git push origin '''+targetBranch+'''
+        '''
+    } catch (Exception a){ } 
+}
