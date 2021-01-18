@@ -129,11 +129,11 @@ def tagGit(String origin, String newRranch){
         sh '''
             git checkout '''+origin+'''
             git tag release-v1-0-0            
-            git push '''+origin+''' --tags
+            git push --tags
             git tag
 
         '''
-       
+       //git push '''+origin+''' --tags
     } catch (Exception a){ } 
 
 
