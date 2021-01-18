@@ -67,7 +67,7 @@ def call(stageOptions, nameProject){
 
                 try {
                     echo "url de sonar: ${env.SONAR_HOST_URL}"
-                    sh "curl -X GET '${env.SONAR_HOST_URL}' -O data.txt"
+                    sh "curl -X GET '${env.SONAR_HOST_URL}' -o data.txt"
                     env.WORKSPACE = pwd()
                     def archivo = readFile "${env.WORKSPACE}/data.txt"
 
