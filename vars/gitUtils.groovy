@@ -11,6 +11,19 @@ def crearRamaGit(String origin, String newRranch){
 
 }
 
+def tagGit(String origin, String newRranch){
+    try {
+        sh '''
+            git checkout main
+            git fetch --all
+            git tag ${tag}
+            git push origin ${tag}
+        '''
+    } catch (Exception a){ } 
+
+
+}
+
 def borrarRama(String rama){
     
     try {

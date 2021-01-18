@@ -78,7 +78,8 @@
                 gitUtils.crearMerge("${env.GIT_BRANCH}", "main")
                 contStages++;
             } else {
-                echo "No se ejecuta merge en main, ya que no se han ejecutado todos los stages"
+                currentBuild.result = 'FAILURE'
+                error ('No se ejecuta merge en main, ya que no se han ejecutado todos los stages')
             }
 
         } 
@@ -90,7 +91,8 @@
                 gitUtils.crearMerge("main", "develop")
                 contStages++;
             } else {
-                echo "No se ejecuta merge en develop, ya que no se han ejecutado todos los stages"
+                currentBuild.result = 'FAILURE'
+                error ('No se ejecuta merge en develop, ya que no se han ejecutado todos los stages')
             }
 
         } 
@@ -98,12 +100,14 @@
             //Joram
             env.TAREA =  env.BRANCH_NAME   
             echo 'Tag Main: ${tag}' 
-                if ((stageOptions.contains('gitTagMaster') || (stageOptions =='')) ) { 
-                   'git checkout main'
-                   'git fetch --all'
-                   'git tag ${tag}'
-                   'git push origin ${tag}'
-                } 
+            if(contStages == 6){
+                    if ((stageOptions.contains('gitTagMaster') || (stageOptions =='')) ) {                    
+                        gitUtils.tagGit("main", "develop")
+                    } 
+            } else {
+                currentBuild.result = 'FAILURE'
+                error ('No se ejecuta gitTagMaster, ya que no se han ejecutado todos los stages')
+            }   
             
         } 
 
