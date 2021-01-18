@@ -65,19 +65,20 @@ def call(stageOptions, nameProject){
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
 
-                echo "url de sonar: ${env.SONAR_HOST_URL}"
-                sh "curl -X GET ${env.SONAR_HOST_URL} -O data.txt"
-                env.WORKSPACE = pwd()
-                def archivo = readFile "${env.WORKSPACE}/data.txt"
+                try {
+                    echo "url de sonar: ${env.SONAR_HOST_URL}"
+                    sh "curl -X GET '${env.SONAR_HOST_URL}' -O data.txt"
+                    env.WORKSPACE = pwd()
+                    def archivo = readFile "${env.WORKSPACE}/data.txt"
 
-                if (archivo.contains("UP")) 
-                    echo "Ok con sonar"
-                else {
-                    def avisoSonar = "Sonar al parecer no esta operativo: ${env.SONAR_HOST_URL}"
-                    currentBuild.result = 'FAILURE'
-                    error ("${avisoSonar}")
-                }    
-
+                    if (archivo.contains("UP")) 
+                        echo "Ok con sonar"
+                    else {
+                        def avisoSonar = "Sonar al parecer no esta operativo: ${env.SONAR_HOST_URL}"
+                        currentBuild.result = 'FAILURE'
+                        error ("${avisoSonar}")
+                    }       
+                } catch (Exception a){ } 
 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) ) {                 
                     echo "Aplicando Sonar al proyecto:${projectKey}"
