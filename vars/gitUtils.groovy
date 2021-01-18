@@ -32,7 +32,8 @@ def borrarRama(String rama){
     try {
         sh "git fetch -p"
         echo "borrando rama con -d"
-        sh "git branch -d  ${rama}"
+        sh "git branch -d ${rama}"
+        sh "git tag -d ${rama}"
     } catch (Exception a){ }   
 
     try {

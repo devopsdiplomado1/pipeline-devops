@@ -85,13 +85,13 @@ def call(stageOptions, nameProject){
                 env.TAREA =  env.STAGE_NAME 
                 echo "STAGE ${env.STAGE_NAME}"
                 echo "entro a gitCreateRelease" 
-                gitUtils.referenciaRelease("${nameRelease}")
+                
 
-                if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
-                    echo "Se borra rama <${nameRelease}>"
-                    gitUtils.borrarRama("${nameRelease}")
-                }
-
+                //if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
+                echo "Se borra rama <${nameRelease}>"
+                gitUtils.borrarRama("${nameRelease}")
+                //}
+                
                 echo "Se crea rama <${nameRelease}>"
                 gitUtils.crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
                 if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
