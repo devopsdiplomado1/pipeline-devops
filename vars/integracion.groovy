@@ -68,6 +68,16 @@ def call(stageOptions, nameProject){
                     contStages++ 
                    }    
             }  
+            script {
+            timeout(1) {
+                    def qg = waitForQualityGate('sonar')
+                    if (qg.status != 'OK') {
+                        Error "Fallo el llamado a Sonar, se espero 1 minuto, cambie el tiempo si es necesario o verifique la instalacion! failure: ${qg.status}"
+                    }
+                }
+            }
+
+
         }         
 
         stage('nexusUpload') {  
@@ -91,7 +101,7 @@ def call(stageOptions, nameProject){
                 echo "Se borra rama <${nameRelease}>"
                 gitUtils.borrarRama("${nameRelease}")
                 //}
-                
+
                 echo "Se crea rama <${nameRelease}>"
                 gitUtils.crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
                 if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
