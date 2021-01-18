@@ -60,12 +60,16 @@ def call(stageOptions, nameProject){
                 
             }    
 
-            echo "url de sonar: ${env.SONAR_HOST_URL}"
-            sh "curl -X GET ${env.SONAR_HOST_URL}"
-            echo "xxxxxxxxxxxx"
+
 
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
+
+                echo "url de sonar: ${env.SONAR_HOST_URL}"
+                sh "curl -X GET ${env.SONAR_HOST_URL}"
+                echo "xxxxxxxxxxxx"
+
+                
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) ) {                 
                     echo "Aplicando Sonar al proyecto:${projectKey}"
                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${projectKey} -Dsonar.java.binaries=build"  
