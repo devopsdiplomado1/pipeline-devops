@@ -104,7 +104,8 @@
             echo 'Tag Main: ${tag}' 
             if(contStages == 6){
                     if ((stageOptions.contains('gitTagMaster') || (stageOptions =='')) ) {    
-                        gitUtils.referenciaRelease("${env.GIT_BRANCH}")               
+                        gitUtils.referenciaRelease("${env.GIT_BRANCH}")   
+                        gitUtils.referenciaMain()            
                         gitUtils.tagGit("origin/main", "origin/${env.GIT_BRANCH}")
                     } 
             } else {
