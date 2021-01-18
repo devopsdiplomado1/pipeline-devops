@@ -1,14 +1,25 @@
 def crearRamaGit(String origin, String newRranch){
-    try {
+   try {
         sh '''
             git fetch -p
             git checkout '''+origin+'''; git pull
+        '''
+    } catch (Exception a){ } 
+
+    try {
+        sh '''
+            git checkout -b '''+newRranch+'''
+        '''
+    } catch (Exception a){ 
+            borrarRama(${newRranch})
+    } 
+
+    try {
+        sh '''
             git checkout -b '''+newRranch+'''
             git push origin '''+newRranch+'''
         '''
     } catch (Exception a){ } 
-
-
 }
 
 
