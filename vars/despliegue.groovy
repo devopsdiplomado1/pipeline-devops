@@ -75,7 +75,7 @@
             env.TAREA =  env.STAGE_NAME  
             echo 'stage gitMergeMaster' 
             if(contStages == 4){
-                gitUtils.crearMerge("${env.GIT_BRANCH}", "origin/main")
+                gitUtils.crearMerge("origin/${env.GIT_BRANCH}", "origin/main")
                 contStages++;
             } else {
                 currentBuild.result = 'FAILURE'
@@ -88,7 +88,7 @@
             env.TAREA =  env.STAGE_NAME   
             echo 'stage gitMergeDevelop'
             if(contStages == 5){
-                gitUtils.crearMerge("origin/main", "develop")
+                gitUtils.crearMerge("origin/main", "origin/develop")
                 contStages++;
             } else {
                 currentBuild.result = 'FAILURE'
@@ -102,7 +102,7 @@
             echo 'Tag Main: ${tag}' 
             if(contStages == 6){
                     if ((stageOptions.contains('gitTagMaster') || (stageOptions =='')) ) {                    
-                        gitUtils.tagGit("origin/main", "develop")
+                        gitUtils.tagGit("origin/main", "origin/develop")
                     } 
             } else {
                 currentBuild.result = 'FAILURE'
