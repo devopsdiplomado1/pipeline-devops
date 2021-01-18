@@ -75,12 +75,12 @@ def call(stageOptions, nameProject){
                         if (qg.status != 'OK') {
                             Error "Fallo el llamado a Sonar, se espero 1 minuto, cambie el tiempo si es necesario o verifique la instalacion! failure: ${qg.status}"
                         }
-                    }
-                }    
+                    }    
                 } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
                     currentBuild.result = "FAILURE"
                     env.shouldBuild = "false"
-            }
+                }
+            }    
           
 
 
