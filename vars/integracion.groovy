@@ -58,9 +58,7 @@ def call(stageOptions, nameProject){
                 echo "No se puede ejecutar Sonar sin haber ejecutado un Build"
                 buildEjecutado = false;
                 
-            }    
-
-
+            }
 
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
@@ -86,14 +84,10 @@ def call(stageOptions, nameProject){
 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) ) {                 
                     echo "Aplicando Sonar al proyecto:${projectKey}"
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${projectKey} -Dsonar.java.binaries=build"  
+                    bat "${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=${projectKey} -Dsonar.java.binaries=build"  
                     contStages++ 
-                   }    
-            }  
-            
-          
-
-
+                }    
+            } 
         }         
 
         stage('nexusUpload') {  
@@ -106,17 +100,13 @@ def call(stageOptions, nameProject){
         }  
 
         stage('gitCreateRelease') {  
-            //rodrigo
             if ( ("${env.BRANCH_NAME}" =~ /(develop)/) && (stageOptions.contains('gitCreateRelease') || (stageOptions =='')) && (buildEjecutado) && (contStages == 5)) {
                 env.TAREA =  env.STAGE_NAME 
                 echo "STAGE ${env.STAGE_NAME}"
                 echo "entro a gitCreateRelease" 
                 
-
-                //if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
                 echo "Se borra rama <${nameRelease}>"
                 gitUtils.borrarRama("${nameRelease}")
-                //}
 
                 echo "Se crea rama <${nameRelease}>"
                 gitUtils.crearRamaGit("${env.GIT_BRANCH}", "${nameRelease}");
@@ -128,7 +118,6 @@ def call(stageOptions, nameProject){
                         currentBuild.result = 'FAILURE'
                         error ('Rama <${nameRelease}> no se creo')
                 }
-                 
                 
                 //Este stage sólo debe estar disponible para la rama develop.  
                 //Si IC de develop OK = ejecución de pipeline CD para rama Release creada  
