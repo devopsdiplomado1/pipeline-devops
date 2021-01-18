@@ -27,16 +27,11 @@
             //Andres 
             env.TAREA = env.STAGE_NAME
 
-            echo env.BRANCH_NAME
-            
-            STATUS = sh(returnStdout: true, script: "git status")
-            echo STATUS
-            
-            BRANCH = sh(returnStdout: true, script: "git branch")
-            echo BRANCH
+            echo env.GIT_BRANCH
 
-            DIFF = sh(returnStdout: true, script: "git diff main feature-estadopais")
+            DIFF = sh(returnStdout: true, script: "git diff ${env.GIT_BRANCH} origin/main").trim()
             echo DIFF
+            contStages++;
         }
 
         stage("nexusDownload"){   
