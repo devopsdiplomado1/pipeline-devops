@@ -6,6 +6,8 @@ def crearRamaGit(String origin, String newRranch){
         '''
     } catch (Exception a){ } 
 
+
+
     try {
         sh '''
             git checkout -b '''+newRranch+'''
@@ -41,6 +43,11 @@ def borrarRama(String rama){
      try {
          echo "borrando rama con -delete y remotes"
          sh "git push origin --delete refs/remotes/origin/${rama}"
+    } catch (Exception a){ } 
+
+         try {
+         echo "borrando rama con -delete y remotes2"
+         sh "git push origin : refs/heads/${rama}"
     } catch (Exception a){ }  
 
      try {
