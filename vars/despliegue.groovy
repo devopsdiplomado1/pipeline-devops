@@ -24,11 +24,14 @@
        }
         
         stage("gitDiff"){   
-            env.TAREA = env.STAGE_NAME
+            if ((stageOptions.contains('gitDiff') || (stageOptions =='')) ) {
 
-            gitUtils.referenciaMain()
-            gitUtils.diffRama("${env.GIT_BRANCH}")            
-            contStages++;
+                env.TAREA = env.STAGE_NAME
+
+                gitUtils.referenciaMain()
+                gitUtils.diffRama("${env.GIT_BRANCH}")            
+                contStages++;
+            }
         }
 
         stage("nexusDownload"){   
