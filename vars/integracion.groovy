@@ -60,8 +60,8 @@ def call(stageOptions, nameProject){
                 
             }    
 
-            echo '${env.SONAR_HOST_URL}'
-            sh "curl -X GET '"${env.SONAR_HOST_URL}"'"
+            echo "url de sonar: ${env.SONAR_HOST_URL}"
+            sh "curl -X GET ${env.SONAR_HOST_URL}"
             echo "xxxxxxxxxxxx"
 
             def scannerHome = tool 'sonar-scanner';    
