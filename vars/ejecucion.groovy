@@ -73,7 +73,6 @@ pipeline {
     }
 
     post {
-	//Tamara
         success{
             slackSend color: 'good', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: OK]"           
         }
