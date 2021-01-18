@@ -85,7 +85,7 @@ def call(stageOptions, nameProject){
                 env.TAREA =  env.STAGE_NAME 
                 echo "STAGE ${env.STAGE_NAME}"
                 echo "entro a gitCreateRelease" 
-                referenciaRelease("${nameRelease}")
+                gitUtils.referenciaRelease("${nameRelease}")
 
                 if (gitUtils.chequearSiExisteRama("${nameRelease}")) {
                     echo "Se borra rama <${nameRelease}>"
