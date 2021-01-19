@@ -76,7 +76,7 @@
             env.TAREA =  env.STAGE_NAME  
             echo 'stage gitMergeMaster' 
             if(contStages == 4){
-                gitUtils.crearMerge("origin/${env.GIT_BRANCH}", "origin/main")
+                gitUtils.crearMerge("${env.GIT_BRANCH}", "main")
                 contStages++;
             } else {
                 currentBuild.result = 'FAILURE'
@@ -90,7 +90,7 @@
             echo 'stage gitMergeDevelop'
             if(contStages == 5){
                 gitUtils.referenciaDevelop()
-                gitUtils.crearMerge("origin/main", "origin/develop")
+                gitUtils.crearMerge("main", "develop")
                 contStages++;
             } else {
                 currentBuild.result = 'FAILURE'
