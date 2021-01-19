@@ -111,8 +111,6 @@ def referenciaRelease(String targetBranch){
 
 def crearMerge(String originBranch, String targetBranch){
     try {
-        sh "git fetch origin main:refs/remotes/origin/main"
-
         sh '''
             git fetch -p
             git checkout '''+targetBranch+'''
