@@ -72,7 +72,7 @@
             echo 'stage gitMergeMaster' 
             if ((stageOptions.contains('gitMergeMaster') || (stageOptions ==''))  ) {
                 if(contStages == 4){
-                    gitUtils.crearMerge("origin/${env.GIT_BRANCH}", "origin/main")
+                    gitUtils.crearMerge("${env.GIT_BRANCH}", "main")
                     contStages++;
                 } else {
                     echo  "No se ejecuta merge en main, ya que no se han ejecutado todos los stages"
@@ -84,8 +84,7 @@
             echo 'stage gitMergeDevelop'
             if ((stageOptions.contains('gitMergeDevelop') || (stageOptions ==''))  ) {
                 if(contStages == 5){
-                    gitUtils.referenciaDevelop()
-                    gitUtils.crearMerge("origin/main", "origin/develop")
+                    gitUtils.crearMerge("main", "develop")
                     contStages++;
                 } else {
                     echo "No se ejecuta merge en develop, ya que no se han ejecutado todos los stages"
