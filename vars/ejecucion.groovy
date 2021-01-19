@@ -1,9 +1,9 @@
 def isIntegracion() {
-    return ("${env.BRANCH_NAME}" =~ /(feature|develop)/)
+    return ("${env.GIT_BRANCH}" =~ /(feature|develop)/)
 }
 
 def isDespliegue() {
-    return ("${env.BRANCH_NAME}" =~ /(release*)/)
+    return ("${env.GIT_BRANCH}" =~ /(release*)/)
 }
 def getNombreProyecto(){
     return env.GIT_URL.replaceAll('https://github.com/devopsdiplomado1/', '').replaceAll('.git', '');
@@ -14,7 +14,7 @@ def isProyectoMavenOK(){
 }
 
 def cumplePatron(){
-    return ("${env.BRANCH_NAME}" =~ /release-v\d{1,2}\-\d{1,2}\-\d{1,3}/)
+    return ("${env.GIT_BRANCH}" =~ /release-v\d{1,2}\-\d{1,2}\-\d{1,3}/)
 }
 
 def call(){
@@ -34,7 +34,7 @@ pipeline {
                 env.TAREA = ''
                 echo "A.-Stages seleccionados: ${stage}"   
                 echo "B.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
-                echo "C.-Rama ${env.BRANCH_NAME}" 
+                echo "C.-Rama ${env.GIT_BRANCH}" 
                 echo "D.-Nombre del projecto ${getNombreProyecto()}" 
                 echo "E.-Estan los archivos maven? ${isProyectoMavenOK()}" 
 
@@ -62,7 +62,7 @@ pipeline {
 				            error ("La rama release no cumple con el patrón release-v{major}-{minor}-{patch}")
 			            }
                 }  else {
-                        error ("Esta rama ${env.BRANCH_NAME} no puede ejecutarse con este pipeline")
+                        error ("Esta rama ${env.GIT_BRANCH} no puede ejecutarse con este pipeline")
                 }
 
                 }
@@ -74,11 +74,11 @@ pipeline {
 
     post {
         success{
-            slackSend color: 'good', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: OK]"           
+            slackSend color: 'good', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.GIT_BRANCH}][Stage: ${env.TAREA}][Resultado: OK]"           
         }
 
         failure{
-            slackSend color: 'danger', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.BRANCH_NAME}][Stage: ${env.TAREA}][Resultado: No OK]"                   
+            slackSend color: 'danger', message: "[Grupo 1][Pipeline ${env.NOM_PIPELINE}][Rama: ${env.GIT_BRANCH}][Stage: ${env.TAREA}][Resultado: No OK]"                   
         }
     }
 
